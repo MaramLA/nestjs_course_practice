@@ -1,0 +1,9 @@
+POST http://localhost:3000/tags
+Content-Type: application/json
+
+{
+    "name": "html",
+    "slug": "html",
+    "description": "all posts html"
+
+}
