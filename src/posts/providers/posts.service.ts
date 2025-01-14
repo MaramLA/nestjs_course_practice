@@ -1,5 +1,10 @@
 import { TagsService } from './../../tags/providers/tags.service';
-import { Body, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Body,
+  Injectable,
+  RequestTimeoutException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MetaOption } from 'src/meta-options/metaOption.entity';
 import { UserService } from 'src/users/providers/users.service';
@@ -46,9 +51,26 @@ export class PostsService {
   }
 
   public async update(patchPostDto: PatchPostDto) {
-    const tags = await this.tagsService.findMultipleTags(patchPostDto.tags);
+    let tags, post;
+    try {
+      tags = await this.tagsService.findMultipleTags(patchPostDto.tags);
+      post = await this.postRepository.findOneBy({ id: patchPostDto.id });
+    } catch (error) {
+      throw new RequestTimeoutException(
+        'Unable to process your request at the moment please try later',
+        { description: 'Error connecting to the database' },
+      );
+    }
 
-    const post = await this.postRepository.findOneBy({ id: patchPostDto.id });
+    if (!post) {
+      throw new BadRequestException(
+        `Post with id ${patchPostDto.id} not found`,
+      );
+    }
+
+    if (!tags || tags.length !== patchPostDto.tags.length) {
+      throw new BadRequestException('Please ensure tag ids are cosrect');
+    }
 
     patchPostDto.title = patchPostDto.title ?? post.title;
     patchPostDto.postType = patchPostDto.postType ?? post.postType;
@@ -62,6 +84,14 @@ export class PostsService {
 
     post.tags = tags;
 
-    return await this.postRepository.save(post);
+    try {
+      await this.postRepository.save(post);
+    } catch (error) {
+      throw new RequestTimeoutException(
+        'Unable to process your request at the moment please try later',
+        { description: 'Error connecting to the database' },
+      );
+    }
+    return post;
   }
 }
