@@ -47,6 +47,7 @@ export class PostsService {
 
   public async update(patchPostDto: PatchPostDto) {
     const tags = await this.tagsService.findMultipleTags(patchPostDto.tags);
+
     const post = await this.postRepository.findOneBy({ id: patchPostDto.id });
 
     patchPostDto.title = patchPostDto.title ?? post.title;

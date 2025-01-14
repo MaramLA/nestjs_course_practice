@@ -33,6 +33,7 @@ const ENV = process.env.NODE_ENV;
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
+      // use database environment variables
       useFactory: (configService: ConfigService) => ({
         type: 'postgres',
         // entities: [User],
