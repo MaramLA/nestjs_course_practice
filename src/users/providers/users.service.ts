@@ -10,11 +10,13 @@ import {
 import { ConfigType } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AuthService } from 'src/auth/providers/auth.service';
-import { DataSource, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import profileConfig from '../config/profile.config';
+import { CreateManyUsersDto } from '../dtos/create-many-users.dto';
 import { GetUserParamsDto } from '../dtos/get-user-params.dto';
 import { User } from '../user.entity';
 import { CreateUserDto } from './../dtos/create-user.dto';
+import { UsersCreateManyProvider } from './users-create-many.provider';
 /**
  * Class to connect users and performe business operations
  */
@@ -33,8 +35,8 @@ export class UserService {
     @Inject(profileConfig.KEY)
     private readonly profileConfiguration: ConfigType<typeof profileConfig>,
 
-    // inject datasource
-    private readonly dataSource: DataSource,
+    // inject UsersCreateManyProvider
+    private readonly usersCreateManyProvider: UsersCreateManyProvider,
   ) {}
 
   public async createUser(newUser: CreateUserDto) {
@@ -111,28 +113,7 @@ export class UserService {
     return user;
   }
 
-  public async createMany(createUsersDto: CreateUserDto[]) {
-    let newUsers: User[] = [];
-    // create query runner instance
-    const queryRunner = this.dataSource.createQueryRunner();
-    // connect query runner to the datasource
-    await queryRunner.connect();
-    // start transaction
-    await queryRunner.startTransaction();
-    try {
-      for (user of createUsersDto) {
-        let newUser = queryRunner.manager.create(User, user);
-        let result = await queryRunner.manager.save(newUser);
-        newUsers.push(result);
-      }
-      // if successful tansaaction
-      await queryRunner.commitTransaction();
-    } catch (error) {
-      // if unsuccessful transaction
-      await queryRunner.rollbackTransaction();
-    } finally {
-      // release connection
-      await queryRunner.release();
-    }
+  public async createMany(createManyUsersDto: CreateManyUsersDto) {
+    return await this.usersCreateManyProvider.createMany(createManyUsersDto);
   }
 }
