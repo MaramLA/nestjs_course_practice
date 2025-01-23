@@ -15,6 +15,7 @@ import { PatchUserDto } from './dtos/patch-user.dto';
 import { UserService } from './providers/users.service';
 import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateManyUsersDto } from './dtos/create-many-users.dto';
+import { PaginationQueryDto } from 'src/common/pagination/dtos/pagination-query.dto';
 
 @Controller('users')
 @ApiTags('Users')
@@ -28,7 +29,7 @@ export class UsersController {
   //   }
 
   //   grab specific attribute in params or query
-  @Get('/:id')
+  @Get('/:id?')
   @ApiOperation({
     summary: 'Fetches a list of registered users on the application',
   })
@@ -51,11 +52,11 @@ export class UsersController {
     example: 1,
   })
   public getUser(
-    @Param() params: GetUserParamsDto,
-    @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number,
-    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
+    @Param() getUserParamsDto: GetUserParamsDto,
+    @Query() paginationQuery: PaginationQueryDto,
   ) {
-    return this.usersService.findAll(params, limit, page);
+    console.log('from get users controller')
+    return this.usersService.findAll(getUserParamsDto, paginationQuery);
   }
 
   @Post()

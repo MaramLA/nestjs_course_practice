@@ -42,7 +42,7 @@ export class PostsService {
     postQuery: GetPostsDto,
     userId: string,
   ): Promise<Paginated<Post>> {
-    const posts = this.paginationProvider.paginateQuery(
+    const posts = await this.paginationProvider.paginateQuery(
       {
         limit: postQuery.limit,
         page: postQuery.page,

@@ -17,6 +17,8 @@ import { GetUserParamsDto } from '../dtos/get-user-params.dto';
 import { User } from '../user.entity';
 import { CreateUserDto } from './../dtos/create-user.dto';
 import { UsersCreateManyProvider } from './users-create-many.provider';
+import { PaginationProvider } from 'src/common/pagination/providers/pagination.provider';
+import { PaginationQueryDto } from 'src/common/pagination/dtos/pagination-query.dto';
 /**
  * Class to connect users and performe business operations
  */
@@ -37,6 +39,8 @@ export class UserService {
 
     // inject UsersCreateManyProvider
     private readonly usersCreateManyProvider: UsersCreateManyProvider,
+
+    private readonly paginationProvider: PaginationProvider,
   ) {}
 
   public async createUser(newUser: CreateUserDto) {
@@ -72,25 +76,51 @@ export class UserService {
   /**
    * Find all users and fetch them
    */
-  public findAll(
+  public async findAll(
     getUserParamsDto: GetUserParamsDto,
-    limit: number,
-    page: number,
+    paginationQuery: PaginationQueryDto,
   ) {
-    // custom exception handler
-    throw new HttpException(
-      {
-        status: HttpStatus.MOVED_PERMANENTLY,
-        error: 'The API endpoint does not exist',
-        fileName: 'users.service.ts',
-        lineNumber: 88,
-      },
-      HttpStatus.MOVED_PERMANENTLY,
-      {
-        cause: new Error(),
-        description: 'The API endpoint was moved permenantly',
-      },
-    );
+    try {
+      console.log('from get users service');
+      console.log('paginationQuery.limit= ', paginationQuery.limit);
+      console.log('paginationQuery.page= ', paginationQuery.page);
+
+      const users = await this.paginationProvider.paginateQuery(
+        {
+          limit: paginationQuery.limit,
+          page: paginationQuery.page,
+        },
+        this.userRepository,
+      );
+
+      console.log('users= ', users);
+
+      if (!users) {
+        throw new BadRequestException('No users found');
+      }
+
+      return users;
+    } catch (error) {
+      throw new RequestTimeoutException(
+        'Unable to process your request at the moment please try later',
+        { description: 'Error connecting to the database' },
+      );
+    }
+
+    // // custom exception handler
+    // throw new HttpException(
+    //   {
+    //     status: HttpStatus.MOVED_PERMANENTLY,
+    //     error: 'The API endpoint does not exist',
+    //     fileName: 'users.service.ts',
+    //     lineNumber: 88,
+    //   },
+    //   HttpStatus.MOVED_PERMANENTLY,
+    //   {
+    //     cause: new Error(),
+    //     description: 'The API endpoint was moved permenantly',
+    //   },
+    // );
   }
 
   /**

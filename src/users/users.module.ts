@@ -7,6 +7,7 @@ import { UserService } from './providers/users.service';
 import { User } from './user.entity';
 import { UsersController } from './users.controller';
 import { UsersCreateManyProvider } from './providers/users-create-many.provider';
+import { PaginationModule } from 'src/common/pagination/pagination.module';
 
 @Module({
   controllers: [UsersController],
@@ -16,6 +17,7 @@ import { UsersCreateManyProvider } from './providers/users-create-many.provider'
     TypeOrmModule.forFeature([User]),
     forwardRef(() => AuthModule),
     ConfigModule.forFeature(profileConfig),
+    PaginationModule,
   ],
 })
 export class UsersModule {}
