@@ -5,11 +5,16 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  // enable dto validation
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
       forbidNonWhitelisted: true,
       transform: true,
+      transformOptions: {
+        // to avoid using @Type(()=>xyz) in every needed dto
+        enableImplicitConversion: true,
+      },
     }),
   );
 
