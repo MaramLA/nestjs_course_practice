@@ -17,6 +17,7 @@ import { GetUserParamsDto } from '../dtos/get-user-params.dto';
 import { User } from '../user.entity';
 import { CreateUserDto } from './../dtos/create-user.dto';
 import { CreateUserProvider } from './create-user.provider';
+import { FindUserByEmailProvider } from './find-user-by-email.provider';
 import { UsersCreateManyProvider } from './users-create-many.provider';
 /**
  * Class to connect users and performe business operations
@@ -42,6 +43,8 @@ export class UserService {
     private readonly paginationProvider: PaginationProvider,
 
     private readonly createUserProvier: CreateUserProvider,
+
+    private readonly findUserByEmailProvider: FindUserByEmailProvider,
   ) {}
 
   public async createUser(createUserDto: CreateUserDto) {
@@ -115,6 +118,10 @@ export class UserService {
       throw new BadRequestException('User id does not exist');
     }
     return user;
+  }
+
+  public async findOneByEmail(email: string) {
+    return this.findUserByEmailProvider.findUserByEmail(email);
   }
 
   public async createMany(createManyUsersDto: CreateManyUsersDto) {
