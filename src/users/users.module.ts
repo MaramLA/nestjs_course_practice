@@ -8,10 +8,12 @@ import { User } from './user.entity';
 import { UsersController } from './users.controller';
 import { UsersCreateManyProvider } from './providers/users-create-many.provider';
 import { PaginationModule } from 'src/common/pagination/pagination.module';
+import { CreateUserProvider } from './providers/create-user.provider';
+import { HashingProvider } from 'src/auth/providers/hashing.provider';
 
 @Module({
   controllers: [UsersController],
-  providers: [UserService, UsersCreateManyProvider],
+  providers: [UserService, UsersCreateManyProvider, CreateUserProvider],
   exports: [UserService],
   imports: [
     TypeOrmModule.forFeature([User]),

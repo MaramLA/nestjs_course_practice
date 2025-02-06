@@ -1,21 +1,19 @@
 import {
   Body,
   Controller,
-  DefaultValuePipe,
   Get,
   Param,
-  ParseIntPipe,
   Patch,
   Post,
   Query,
 } from '@nestjs/common';
-import { CreateUserDto } from './dtos/create-user.dto';
+import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { PaginationQueryDto } from 'src/common/pagination/dtos/pagination-query.dto';
+import { CreateManyUsersDto } from './dtos/create-many-users.dto';
 import { GetUserParamsDto } from './dtos/get-user-params.dto';
 import { PatchUserDto } from './dtos/patch-user.dto';
 import { UserService } from './providers/users.service';
-import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { CreateManyUsersDto } from './dtos/create-many-users.dto';
-import { PaginationQueryDto } from 'src/common/pagination/dtos/pagination-query.dto';
+import { CreateUserDto } from './dtos/create-user.dto';
 
 @Controller('users')
 @ApiTags('Users')
@@ -55,12 +53,13 @@ export class UsersController {
     @Param() getUserParamsDto: GetUserParamsDto,
     @Query() paginationQuery: PaginationQueryDto,
   ) {
-    console.log('from get users controller')
+    console.log('from get users controller');
     return this.usersService.findAll(getUserParamsDto, paginationQuery);
   }
 
   @Post()
   public createUsers(@Body() createUserDto: CreateUserDto) {
+    console.log('hi 1');
     return this.usersService.createUser(createUserDto);
   }
 
