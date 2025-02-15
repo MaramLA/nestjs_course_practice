@@ -7,6 +7,16 @@ import { DataSource } from 'typeorm';
 import { CreateManyUsersDto } from '../dtos/create-many-users.dto';
 import { User } from '../user.entity';
 
+// steps for using a query runner
+//     inject the datasource object to manage database connections
+//     create a new query runner instance using the datasource object
+//     connect the query runner to the database
+//     start transaction using the query runner
+//     user query runner manager to manage different operations
+//     commit transaction
+//     if error occured roll back transaction and throw an error
+//     release connection
+
 @Injectable()
 export class UsersCreateManyProvider {
   constructor(

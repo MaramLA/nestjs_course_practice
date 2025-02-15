@@ -14,7 +14,7 @@ import { SignInProvider } from './providers/sign-in.provider';
     adding the password hashing abstract class and 
     its implementation class to the auth module => this is 
     benficial becuase we can later on replcae the BcryptProvider class 
-    with any other class that may have another method for authinticaiton 
+    with any other class that may have another method for authenticaiton 
     */
     {
       provide: HashingProvider,

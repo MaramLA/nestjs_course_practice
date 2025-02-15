@@ -1,7 +1,6 @@
 import { TagsService } from './../../tags/providers/tags.service';
 import {
   BadRequestException,
-  Body,
   Injectable,
   RequestTimeoutException,
 } from '@nestjs/common';
@@ -27,7 +26,7 @@ export class PostsService {
     private readonly paginationProvider: PaginationProvider,
   ) {}
 
-  public async createPost(@Body() newPost: CreatePostDto) {
+  public async createPost(newPost: CreatePostDto) {
     const tags = await this.tagsService.findMultipleTags(newPost.tags);
     const foundUser = await this.userService.findOneById(newPost.authorId);
     const createdPost = this.postRepository.create({
