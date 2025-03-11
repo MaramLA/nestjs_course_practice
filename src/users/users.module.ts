@@ -10,6 +10,8 @@ import { UsersCreateManyProvider } from './providers/users-create-many.provider'
 import { UserService } from './providers/users.service';
 import { User } from './user.entity';
 import { UsersController } from './users.controller';
+import { JwtModule } from '@nestjs/jwt';
+import jwtConfig from 'src/auth/config/jwt.config';
 
 @Module({
   controllers: [UsersController],
@@ -25,6 +27,8 @@ import { UsersController } from './users.controller';
     forwardRef(() => AuthModule),
     ConfigModule.forFeature(profileConfig),
     PaginationModule,
+    ConfigModule.forFeature(jwtConfig),
+    JwtModule.registerAsync(jwtConfig.asProvider()),
   ],
 })
 export class UsersModule {}
