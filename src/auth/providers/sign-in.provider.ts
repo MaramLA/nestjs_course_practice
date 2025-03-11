@@ -26,13 +26,13 @@ export class SignInProvider {
     private readonly jwtConfiguration: ConfigType<typeof jwtConfig>,
   ) {}
 
-  public async signIn(signdInDto: SignInDto) {
-    const user = await this.userService.findOneByEmail(signdInDto.email);
+  public async signIn(signInDto: SignInDto) {
+    const user = await this.userService.findOneByEmail(signInDto.email);
     let isEqual: boolean = false;
 
     try {
       isEqual = await this.hashingProvider.comparePassword(
-        signdInDto.password,
+        signInDto.password,
         user.password,
       );
     } catch (error) {
