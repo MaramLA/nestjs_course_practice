@@ -6,16 +6,14 @@ import {
   Patch,
   Post,
   Query,
-  UseGuards,
 } from '@nestjs/common';
 import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { PaginationQueryDto } from 'src/common/pagination/dtos/pagination-query.dto';
 import { CreateManyUsersDto } from './dtos/create-many-users.dto';
+import { CreateUserDto } from './dtos/create-user.dto';
 import { GetUserParamsDto } from './dtos/get-user-params.dto';
 import { PatchUserDto } from './dtos/patch-user.dto';
 import { UserService } from './providers/users.service';
-import { CreateUserDto } from './dtos/create-user.dto';
-import { AccessTokenGuard } from 'src/auth/guards/access-token/access-token.guard';
 
 @Controller('users')
 @ApiTags('Users')
@@ -65,7 +63,7 @@ export class UsersController {
     return this.usersService.createUser(createUserDto);
   }
 
-  @UseGuards(AccessTokenGuard)
+  // @UseGuards(AccessTokenGuard)
   @Post('create-many')
   public createManyUsers(@Body() createManyUsersDto: CreateManyUsersDto) {
     return this.usersService.createMany(createManyUsersDto);

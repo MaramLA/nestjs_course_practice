@@ -1,7 +1,9 @@
 import { forwardRef, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from 'src/auth/auth.module';
+import jwtConfig from 'src/auth/config/jwt.config';
 import { PaginationModule } from 'src/common/pagination/pagination.module';
 import profileConfig from './config/profile.config';
 import { CreateUserProvider } from './providers/create-user.provider';
@@ -10,8 +12,6 @@ import { UsersCreateManyProvider } from './providers/users-create-many.provider'
 import { UserService } from './providers/users.service';
 import { User } from './user.entity';
 import { UsersController } from './users.controller';
-import { JwtModule } from '@nestjs/jwt';
-import jwtConfig from 'src/auth/config/jwt.config';
 
 @Module({
   controllers: [UsersController],
@@ -20,6 +20,11 @@ import jwtConfig from 'src/auth/config/jwt.config';
     UsersCreateManyProvider,
     CreateUserProvider,
     FindUserByEmailProvider,
+    // // this will make the guard applied to the whole app so it is better to add it to the app module instead
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: AccessTokenGuard,
+    // },
   ],
   exports: [UserService],
   imports: [

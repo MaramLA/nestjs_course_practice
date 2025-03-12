@@ -12,6 +12,10 @@ import { MetaOptionsModule } from './meta-options/meta-options.module';
 import { PostsModule } from './posts/posts.module';
 import { TagsModule } from './tags/tags.module';
 import { UsersModule } from './users/users.module';
+import { APP_GUARD } from '@nestjs/core';
+import { JwtModule } from '@nestjs/jwt';
+import jwtConfig from './auth/config/jwt.config';
+import { AccessTokenGuard } from './auth/guards/access-token/access-token.guard';
 
 // User created modules
 
@@ -28,12 +32,16 @@ const ENV = process.env.NODE_ENV;
       isGlobal: true,
       // envFilePath: ['.env.development'],
       envFilePath: !ENV ? '.env' : `.env.${ENV}`,
-      load: [appConfig, databaseConfig],
+      load: [appConfig, databaseConfig, jwtConfig],
       validationSchema: environmentValidation,
     }),
 
     TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
+      imports: [
+        ConfigModule,
+        ConfigModule.forFeature(jwtConfig),
+        JwtModule.registerAsync(jwtConfig.asProvider()),
+      ],
       inject: [ConfigService],
       // use database environment variables
       useFactory: (configService: ConfigService) => ({
@@ -50,6 +58,12 @@ const ENV = process.env.NODE_ENV;
     }),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: AccessTokenGuard,
+    },
+  ],
 })
 export class AppModule {}
