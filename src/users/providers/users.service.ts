@@ -58,7 +58,6 @@ export class UserService {
     paginationQuery: PaginationQueryDto,
   ) {
     try {
-      console.log('from get users service');
       console.log('paginationQuery.limit= ', paginationQuery.limit);
       console.log('paginationQuery.page= ', paginationQuery.page);
 

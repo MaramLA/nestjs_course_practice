@@ -8,6 +8,8 @@ import {
   Query,
 } from '@nestjs/common';
 import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Auth } from 'src/auth/decorator/auth.decorator';
+import { AuthType } from 'src/auth/enums/auth-type.enum';
 import { PaginationQueryDto } from 'src/common/pagination/dtos/pagination-query.dto';
 import { CreateManyUsersDto } from './dtos/create-many-users.dto';
 import { CreateUserDto } from './dtos/create-user.dto';
@@ -53,13 +55,13 @@ export class UsersController {
     @Param() getUserParamsDto: GetUserParamsDto,
     @Query() paginationQuery: PaginationQueryDto,
   ) {
-    console.log('from get users controller');
     return this.usersService.findAll(getUserParamsDto, paginationQuery);
   }
 
   @Post()
+  // @SetMetadata('authtype', 'None')
+  @Auth(AuthType.None)
   public createUsers(@Body() createUserDto: CreateUserDto) {
-    console.log('hi 1');
     return this.usersService.createUser(createUserDto);
   }
 
