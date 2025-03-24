@@ -8,14 +8,14 @@ import {
   Patch,
   Post,
   Query,
-  Req,
 } from '@nestjs/common';
-import { PostsService } from './providers/posts.service';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ActiveUser } from 'src/auth/decorator/active-user.decorator';
+import { ActiveUserData } from 'src/auth/interfaces/active-user-data.interface';
 import { CreatePostDto } from './dtos/create-posts.dto';
-import { PatchPostDto } from './dtos/patch-post.dto';
 import { GetPostsDto } from './dtos/get-posts.dto';
-import { REQUEST_USER_KEY } from 'src/auth/constants/auth.constants';
+import { PatchPostDto } from './dtos/patch-post.dto';
+import { PostsService } from './providers/posts.service';
 
 @Controller('posts')
 @ApiTags('Posts')
@@ -37,9 +37,11 @@ export class PostsController {
     description: 'you get 201 if request was succssful',
   })
   @Post()
-  public createPost(@Req() request /*@Body() createdPost: CreatePostDto*/) {
-    // return this.postsService.createPost(createdPost);
-    console.log('request.user: ', request[REQUEST_USER_KEY]);
+  public createPost(
+    @Body() createdPost: CreatePostDto,
+    @ActiveUser() user: ActiveUserData,
+  ) {
+    return this.postsService.createPost(user, createdPost);
   }
 
   @Patch()

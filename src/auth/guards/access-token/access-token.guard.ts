@@ -40,7 +40,7 @@ export class AccessTokenGuard implements CanActivate {
 
       // attach user email and id to the request after extracting them from the token
       request[REQUEST_USER_KEY] = payload;
-      console.log('payload: ', payload);
+      // console.log('payload: ', payload);
     } catch {
       throw new UnauthorizedException();
     }

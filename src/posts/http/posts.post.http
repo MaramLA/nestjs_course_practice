@@ -1,12 +1,12 @@
 
 POST http://localhost:3000/posts
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEwLCJlbWFpbCI6Imtlc2luaWFAZ21haWwuY29tIiwiaWF0IjoxNzQyNzMyMTI2LCJleHAiOjE3NDI3MzU3MjYsImF1ZCI6ImxvY2FsaG9zdDozMDAwIiwiaXNzIjoibG9jYWxob3N0OjMwMDAifQ.EyANHJ-d9ooPw-8D0L-0zIROl2rM4DID_V8cTugHs9M
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEwLCJlbWFpbCI6Imtlc2luaWFAZ21haWwuY29tIiwiaWF0IjoxNzQyODU2Njg2LCJleHAiOjE3NDI4NjAyODYsImF1ZCI6ImxvY2FsaG9zdDozMDAwIiwiaXNzIjoibG9jYWxob3N0OjMwMDAifQ.CS0p4-xr08vUT2RHKQExapgjZBhnC6GIG63F0-HgXEY
 
 {
-"title": "What's new with NestJS 30",
+"title": "What's new with NestJS 31",
     "postType": "post",
-    "slug": "new-with-nodejs-30",
+    "slug": "new-with-nodejs-31",
     "status": "draft",
     "content": "test content",
     "schema": "{\r\n \"@Context\": \"http:\/\/schema.org\", \r\n \"@type\": \"Person\"\r\n}",
@@ -16,6 +16,5 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEwLCJlbWFpb
    "metaOptions": { 
         "metaValue": "{\"sidebarEnabled\": true, \"footerActive\":true}"
        },
-       "authorId": 12,
        "tags": [1, 3]
 }

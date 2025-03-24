@@ -1,3 +1,5 @@
+import { CreatePostProvider } from './create-post.provider';
+import { ActiveUserData } from './../../auth/interfaces/active-user-data.interface';
 import { TagsService } from './../../tags/providers/tags.service';
 import {
   BadRequestException,
@@ -24,17 +26,11 @@ export class PostsService {
     @InjectRepository(MetaOption)
     private metaOptionRepository: Repository<MetaOption>,
     private readonly paginationProvider: PaginationProvider,
+    private readonly createPostProvider: CreatePostProvider,
   ) {}
 
-  public async createPost(newPost: CreatePostDto) {
-    const tags = await this.tagsService.findMultipleTags(newPost.tags);
-    const foundUser = await this.userService.findOneById(newPost.authorId);
-    const createdPost = this.postRepository.create({
-      ...newPost,
-      author: foundUser,
-      tags: tags,
-    });
-    return await this.postRepository.save(createdPost);
+  public async createPost(user: ActiveUserData, newPost: CreatePostDto) {
+    return this.createPostProvider.createPost(user, newPost);
   }
 
   public async findAll(

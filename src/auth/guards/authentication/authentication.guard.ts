@@ -25,24 +25,27 @@ export class AuthenticationGuard implements CanActivate {
   ) {}
   async canActivate(context: ExecutionContext): Promise<boolean> {
     // console.log(this.authTypeGuardMap);
-    let error = undefined;
-    const authTypes =
-      this.reflector.getAllAndOverride(AUTH_TYPE_KEY, [
-        context.getHandler(),
-        context.getClass(),
-      ]) ?? AuthenticationGuard.defaultAuthType;
+
+    // Grab the authtypes assigned to a controller method
+    const authTypes = this.reflector.getAllAndOverride(AUTH_TYPE_KEY, [
+      context.getHandler(),
+      context.getClass(),
+    ]) ?? [AuthenticationGuard.defaultAuthType];
 
     // console.log('authTypes: ', authTypes);
 
     const authTypesArray = Array.isArray(authTypes) ? authTypes : [authTypes];
 
+    // Assign a guard to each auth type
     const guards = authTypesArray
       .map((type) => this.authTypeGuardMap[type])
       .flat();
     // console.log('guards: ', guards);
 
-    error = new UnauthorizedException();
+    // default error
+    let error = new UnauthorizedException();
 
+    // fire the canActivate function of each guard
     for (const instance of guards) {
       // console.log('instance: ', instance);
       const canActivate = await Promise.resolve(

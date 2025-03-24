@@ -7,10 +7,11 @@ import { Post } from './post.entity';
 import { PostsController } from './posts.controller';
 import { PostsService } from './providers/posts.service';
 import { PaginationModule } from 'src/common/pagination/pagination.module';
+import { CreatePostProvider } from './providers/create-post.provider';
 
 @Module({
   controllers: [PostsController],
-  providers: [PostsService],
+  providers: [PostsService, CreatePostProvider],
   imports: [
     UsersModule,
     TagsModule,
