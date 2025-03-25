@@ -11,8 +11,10 @@ export class User {
   lastName: string;
   @Column({ type: 'varchar', length: 96, nullable: false, unique: true })
   email: string;
-  @Column({ type: 'varchar', length: 96, nullable: false })
-  password: string;
+  @Column({ type: 'varchar', length: 96, nullable: true })
+  password?: string;
+  @Column({ type: 'varchar', nullable: true })
+  googleId?: string;
   @OneToMany(() => Post, (post) => post.author)
   posts: Post[];
 }

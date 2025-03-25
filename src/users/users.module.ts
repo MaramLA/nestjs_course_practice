@@ -12,6 +12,7 @@ import { UsersCreateManyProvider } from './providers/users-create-many.provider'
 import { UserService } from './providers/users.service';
 import { User } from './user.entity';
 import { UsersController } from './users.controller';
+import { FindOneByGoogleIdProvider } from './providers/find-one-by-google-id.provider';
 
 @Module({
   controllers: [UsersController],
@@ -20,6 +21,7 @@ import { UsersController } from './users.controller';
     UsersCreateManyProvider,
     CreateUserProvider,
     FindUserByEmailProvider,
+    FindOneByGoogleIdProvider,
     // // this will make the guard applied to the whole app so it is better to add it to the app module instead
     // {
     //   provide: APP_GUARD,
