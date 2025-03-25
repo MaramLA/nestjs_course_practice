@@ -13,6 +13,7 @@ import { UserService } from './providers/users.service';
 import { User } from './user.entity';
 import { UsersController } from './users.controller';
 import { FindOneByGoogleIdProvider } from './providers/find-one-by-google-id.provider';
+import { CreateGoogleUserProvider } from './providers/create-google-user.provider';
 
 @Module({
   controllers: [UsersController],
@@ -22,6 +23,7 @@ import { FindOneByGoogleIdProvider } from './providers/find-one-by-google-id.pro
     CreateUserProvider,
     FindUserByEmailProvider,
     FindOneByGoogleIdProvider,
+    CreateGoogleUserProvider,
     // // this will make the guard applied to the whole app so it is better to add it to the app module instead
     // {
     //   provide: APP_GUARD,

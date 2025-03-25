@@ -1,3 +1,4 @@
+import { CreateGoogleUserProvider } from './create-google-user.provider';
 import { FindOneByGoogleIdProvider } from './find-one-by-google-id.provider';
 import {
   BadRequestException,
@@ -20,6 +21,7 @@ import { CreateUserDto } from './../dtos/create-user.dto';
 import { CreateUserProvider } from './create-user.provider';
 import { FindUserByEmailProvider } from './find-user-by-email.provider';
 import { UsersCreateManyProvider } from './users-create-many.provider';
+import { GoogleUser } from '../interfaces/google-user.interface';
 /**
  * Class to connect users and performe business operations
  */
@@ -48,6 +50,8 @@ export class UserService {
     private readonly findUserByEmailProvider: FindUserByEmailProvider,
 
     private readonly findOneByGoogleIdProvider: FindOneByGoogleIdProvider,
+
+    private readonly createGoogleUserProvider: CreateGoogleUserProvider,
   ) {}
 
   public async createUser(createUserDto: CreateUserDto) {
@@ -131,6 +135,10 @@ export class UserService {
   }
 
   public async findOneByGoogleId(googleId: string) {
-    return this.findOneByGoogleIdProvider.findOneByGoogleId(googleId);
+    return await this.findOneByGoogleIdProvider.findOneByGoogleId(googleId);
+  }
+
+  public async createGoogleUser(googleUser: GoogleUser) {
+    return await this.createGoogleUserProvider.createGoogleUser(googleUser);
   }
 }

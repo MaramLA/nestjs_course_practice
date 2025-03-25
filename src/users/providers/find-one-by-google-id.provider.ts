@@ -11,6 +11,11 @@ export class FindOneByGoogleIdProvider {
   ) {}
 
   public async findOneByGoogleId(googleId: string) {
-    return await this.usersRepository.findOneBy({ googleId });
+    try {
+      const foundUser = await this.usersRepository.findOneBy({ googleId });
+      return foundUser;
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
