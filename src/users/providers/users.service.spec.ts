@@ -31,6 +31,7 @@ describe('UsersService', () => {
     };
 
     const module: TestingModule = await Test.createTestingModule({
+      // Mocks
       providers: [
         UserService,
         {
