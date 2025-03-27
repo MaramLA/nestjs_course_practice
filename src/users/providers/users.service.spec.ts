@@ -19,6 +19,7 @@ describe('UsersService', () => {
 
   // will runbefore each test
   beforeEach(async () => {
+    // Mocks
     const mockCreateUserProvider: Partial<CreateUserProvider> = {
       createUser: (createUserDto: CreateUserDto) =>
         Promise.resolve({
@@ -31,7 +32,6 @@ describe('UsersService', () => {
     };
 
     const module: TestingModule = await Test.createTestingModule({
-      // Mocks
       providers: [
         UserService,
         {
