@@ -88,7 +88,7 @@ describe('UsersService', () => {
     });
 
     it('should call createUser on CreateUserProvider', async () => {
-      let user = await service.createUser({
+      const user = await service.createUser({
         firstName: 'John',
         lastName: 'Doe',
         email: 'a@b.com',
