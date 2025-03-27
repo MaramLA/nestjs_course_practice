@@ -2,6 +2,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
+import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -19,7 +20,7 @@ async function bootstrap() {
   );
 
   // Swagger configuration
-  const config = new DocumentBuilder()
+  const swaggerConfig = new DocumentBuilder()
     .setTitle('NestJs Masterclass')
     .setDescription('User the API URL as http://localhost:3000')
     .setTermsOfService('http://localhost:3000/terms-of-services')
@@ -32,7 +33,9 @@ async function bootstrap() {
     .build();
 
   // instantiate a document object
-  const document = SwaggerModule.createDocument(app, config);
+  const document = SwaggerModule.createDocument(app, swaggerConfig);
+
+  const configService = app.get(ConfigService);
 
   SwaggerModule.setup('api', app, document);
 
