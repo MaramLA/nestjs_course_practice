@@ -19,5 +19,5 @@ export class User {
   @Exclude()
   googleId?: string;
   @OneToMany(() => Post, (post) => post.author)
-  posts: Post[];
+  posts?: Post[];
 }

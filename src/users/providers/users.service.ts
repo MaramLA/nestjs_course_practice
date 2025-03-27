@@ -36,10 +36,6 @@ export class UserService {
     @InjectRepository(User)
     private userRepository: Repository<User>,
 
-    // private readonly configService: ConfigService,
-    @Inject(profileConfig.KEY)
-    private readonly profileConfiguration: ConfigType<typeof profileConfig>,
-
     // inject UsersCreateManyProvider
     private readonly usersCreateManyProvider: UsersCreateManyProvider,
 
@@ -52,6 +48,10 @@ export class UserService {
     private readonly findOneByGoogleIdProvider: FindOneByGoogleIdProvider,
 
     private readonly createGoogleUserProvider: CreateGoogleUserProvider,
+
+    // // private readonly configService: ConfigService,
+    // @Inject(profileConfig.KEY)
+    // private readonly profileConfiguration: ConfigType<typeof profileConfig>,
   ) {}
 
   public async createUser(createUserDto: CreateUserDto) {
