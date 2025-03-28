@@ -4,7 +4,12 @@ import { App } from 'supertest/types';
 import { bootstrapNestApplication } from 'test/helpers/bootstrap-nest-application.helper';
 import { dropDatabase } from 'test/helpers/drop-database.helper';
 import * as request from 'supertest';
-import { completeUser } from './users.post.e2e-spec.sample-data';
+import {
+  completeUser,
+  missingEmail,
+  missingFirstName,
+  missingPassword,
+} from './users.post.e2e-spec.sample-data';
 
 describe('[Users] @Post Endpoints', () => {
   let app: INestApplication;
@@ -28,14 +33,55 @@ describe('[Users] @Post Endpoints', () => {
   });
 
   it('/users - Endpoint is public', () => {
-    console.log(completeUser);
     return request(httpServer).post('/users').send({}).expect(400);
   });
 
-  it.todo('/users - firstName is required');
-  it.todo('/users - email is required');
-  it.todo('/users - password is required');
-  it.todo('/users - Valid request successfully creates user');
-  it.todo('/users - password is not returned in response');
-  it.todo('/users - googleId is not returned in response');
+  it('/users - firstName is required', () => {
+    return request(httpServer)
+      .post('/users')
+      .send(missingFirstName)
+      .expect(400);
+  });
+
+  it('/users - email is required', () => {
+    return request(httpServer).post('/users').send(missingEmail).expect(400);
+  });
+
+  it('/users - password is required', () => {
+    return request(httpServer).post('/users').send(missingPassword).expect(400);
+  });
+
+  it('/users - Valid request successfully creates user', () => {
+    return request(httpServer)
+      .post('/users')
+      .send(completeUser)
+      .expect(201)
+      .then(({ body }) => {
+        expect(body).toBeDefined();
+        expect(body.data.firstName).toBe(completeUser.firstName);
+        expect(body.data.lastName).toBe(completeUser.lastName);
+        expect(body.data.email).toBe(completeUser.email);
+        expect(body.data.password).toBe(completeUser.password);
+      });
+  });
+
+  it('/users - password is not returned in response', () => {
+    return request(httpServer)
+      .post('/users')
+      .send(completeUser)
+      .expect(201)
+      .then(({ body }) => {
+        expect(body.data.password).toBeUndefined();
+      });
+  });
+
+  it('/users - googleId is not returned in response', () => {
+    return request(httpServer)
+      .post('/users')
+      .send(completeUser)
+      .expect(201)
+      .then(({ body }) => {
+        expect(body.data.googleId).toBeUndefined();
+      });
+  });
 });
