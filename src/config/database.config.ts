@@ -9,4 +9,7 @@ export default registerAs('database', () => ({
   syncronize: process.env.DATABASE_SYNC === 'true' ? true : false,
   autoLoadEntities:
     process.env.DATABASE_AUTO_LOAD_ENTITES === 'true' ? true : false,
+
+  mongoDB_connectionString: process.env.MONGODB_CONNECTION_STRING,
+  mongoDB_database: process.env.MONGODB_DATABASE_NAME,
 }));

@@ -32,14 +32,15 @@ export class UsersCreateManyProvider {
       // connect query runner to the datasource
       await queryRunner.connect();
     } catch (error) {
+      console.log(error);
       throw new RequestTimeoutException('could not connect to the database');
     }
     // start transaction
     await queryRunner.startTransaction();
     try {
       for (const user of createManyUsersDto.users) {
-        let newUser = queryRunner.manager.create(User, user);
-        let result = await queryRunner.manager.save(newUser);
+        const newUser = queryRunner.manager.create(User, user);
+        const result = await queryRunner.manager.save(newUser);
         newUsers.push(result);
       }
       // if successful tansaaction
