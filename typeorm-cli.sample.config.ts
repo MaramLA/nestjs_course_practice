@@ -8,7 +8,7 @@ export default new DataSource({
   password: 'password',
   database: 'nestjs-blog',
   entities: ['**/*.entity.js'],
-  migrations: ['migration/*.js'],
+  migrations: ['migrations/*.js'],
 });
 
 // migration generattion command for nest.js:

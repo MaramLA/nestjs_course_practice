@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { MetaOptionsController } from './meta-options.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { MetaOptionsController } from './meta-options.controller';
 import { MetaOption } from './metaOption.entity';
 import { MetaOptionsService } from './providers/meta-options.service';
 
