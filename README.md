@@ -1,13 +1,5 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
- <!-- Stylish README for NestJS Blog API -->
-
-<h1 align="center">🚀 NestJS Blog API – A Scalable Backend Application</h1>
+<h1 align="center">🚀 NestJS Practice course – A Scalable Backend Application</h1>
 
 <p align="center">
   <img src="https://nestjs.com/img/logo_text.svg" width="250" alt="NestJS Logo" />
