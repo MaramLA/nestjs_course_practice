@@ -56,6 +56,9 @@ AWS_S3_BUCKET=your_s3_bucket_name</code></pre>
 
 <h2>💡 Contributing</h2>
 <p>Feel free to fork this repo, open issues, and submit PRs! 🛠️</p>
-<p>📩 Let's connect on <a href="https://linkedin.com/in/maram-alfaraj/">LinkedIn</a>!</p>
+<p>📩 Let's connect on <a href="https://linkedin.com/in/maram-alfaraj">LinkedIn</a>!</p>
 
 ---
+
+<h2>📝 Additional Resources</h2>
+<p>📒 Visit <a href="https://docs.nestjs.com">NestJS</a>!</p>
