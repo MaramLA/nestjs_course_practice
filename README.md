@@ -42,7 +42,8 @@
     <pre><code>PORT=3000
 DATABASE_URL=postgres://user:password@localhost:5432/nestjs-blog
 JWT_SECRET=your_jwt_secret
-AWS_S3_BUCKET=your_s3_bucket_name</code></pre>
+AWS_S3_BUCKET=your_s3_bucket_name
+    ...</code></pre>
   </li>
   <li><b>Run the Application</b>
     <pre><code>npm run start:dev</code></pre>
