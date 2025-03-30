@@ -1,13 +1,10 @@
-<h1 align="center">🚀 NestJS Practice course – A Scalable Backend Application</h1>
-
 <p align="center">
   <img src="https://nestjs.com/img/logo_text.svg" width="250" alt="NestJS Logo" />
 </p>
 
+<h1 align="center">🚀 NestJS Practice course</h1>
+
 ---
-<p align="center">
-  <b>A powerful and scalable backend API built with NestJS, TypeORM, and PostgreSQL.</b>
-</p>
 
 <h2>📌 Features</h2>
 <ul>
