@@ -3,7 +3,6 @@
 </p>
 
 <h1 align="center">🚀 NestJS Practice course</h1>
-<br/><br/><br/>
 
 <h2>📌 Features</h2>
 <ul>
